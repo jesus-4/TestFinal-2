@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>detail</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+  @for(task of tasks(); track $index){
+    <ion-item (click)="setModalState(true, task)">
+      {{task.titulo}}
+      {{task.materia}}
+      {{task.fechaVencimineto}}
+      {{task.prioridad}}
+      {{task.completada}}
+      <ion-button slot="end" (click)="eliminarTask(task.id!)">Eliminar</ion-button>
+    </ion-item>
+  }
+  </ion-list>
+
+
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-content>
+        <ion-list>
+          <form [formGroup]="form" (submit)="updateTask()">
+                  <ion-item>
+                    <ion-label>Titulo</ion-label>
+                    <ion-input formControlName="titulo" ></ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label position="floating">Materia</ion-label>
+                    <ion-input formControlName="materia" ></ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Fecha de vencimineto</ion-label>
+                    <ion-input formControlName="fechaVencimineto" type="date"></ion-input>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Prioridad</ion-label>
+                    <ion-select formControlName="prioridad" >
+                      <ion-select-option value="alta">Alta</ion-select-option>"
+                      <ion-select-option value="media">Media</ion-select-option>
+                      <ion-select-option value="baja">Baja</ion-select-option>"
+                    </ion-select>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label>Completada?</ion-label>
+                    <ion-checkbox formControlName="completada"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Descripcion</ion-label>
+                    <ion-input formControlName="descripcion" ></ion-input>
+                  </ion-item>
+
+                  <ion-button (click)="updateTask()">Actualizar</ion-button>
+                  <ion-button (click)="setModalState(false, undefined)">Cancelar</ion-button>
+
+          </form>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+
+  </ion-modal>
+</ion-content>

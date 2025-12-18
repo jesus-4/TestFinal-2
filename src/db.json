@@ -1,0 +1,49 @@
+{
+  "tasks": [
+    {
+      "id": "0cd4",
+      "titulo": "titulo",
+      "materia": "naaaaa",
+      "fechaVencimineto": "2002-02-04",
+      "prioridad": "media",
+      "completada": false,
+      "descripcion": ""
+    },
+    {
+      "id": "0a6d",
+      "titulo": "algo importante",
+      "materia": "matematicas 2",
+      "fechaVencimineto": "2025-08-06",
+      "prioridad": "baja",
+      "completada": true,
+      "descripcion": " se deben realizar todos los tps"
+    },
+    {
+      "id": "aad7",
+      "titulo": "222",
+      "materia": "wdw",
+      "fechaVencimineto": "2026-01-10",
+      "prioridad": "media",
+      "completada": false,
+      "descripcion": ""
+    },
+    {
+      "id": "4318",
+      "titulo": "333",
+      "materia": "wdw",
+      "fechaVencimineto": "2026-01-10",
+      "prioridad": "media",
+      "completada": false,
+      "descripcion": ""
+    },
+    {
+      "id": "e1fc",
+      "titulo": "Cargar Notas SIU",
+      "materia": "Programacion Avanzada 3",
+      "fechaVencimineto": "2025-12-18",
+      "prioridad": "media",
+      "completada": true,
+      "descripcion": "Se debe tener en cuenta el tiempo de la evaluacion las actas no firmadas de la musma instancia"
+    }
+  ]
+}
