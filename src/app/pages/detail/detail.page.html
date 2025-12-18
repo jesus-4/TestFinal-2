@@ -8,21 +8,30 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-button id="botonFiltro">
+      filtrar
+    </ion-button>
+    <ion-action-sheet trigger="botonFiltro" [buttons]="filtro"></ion-action-sheet>
+  </ion-item>
+
   <ion-list>
-  @for(task of tasks(); track $index){
-    <ion-item (click)="setModalState(true, task)">
-      {{task.titulo}}
-      {{task.materia}}
-      {{task.fechaVencimineto}}
-      {{task.prioridad}}
-      {{task.completada}}
-      <ion-button slot="end" (click)="eliminarTask(task.id!)">Eliminar</ion-button>
-    </ion-item>
-  }
+    @for(task of filteredTasks(); track $index){
+      <ion-item (click)="setModalState(true, task)">
+        <ion-label class="textClass">
+          <h2 color="red" >{{task.titulo}}</h2> <br>
+          <p>{{task.materia}} </p>
+          {{task.fechaVencimineto | date:('dd/MM/yyyy')}} <br>
+          {{task.prioridad}}
+          </ion-label>
+        <ion-button slot="end" (click)="eliminarTask(task.id!)">Eliminar</ion-button>
+
+      </ion-item>
+    }
   </ion-list>
 
 
-  <ion-modal [isOpen]="isModalOpen">
+  <ion-modal [isOpen]="isModalOpen" miss>
     <ng-template>
       <ion-content>
         <ion-list>

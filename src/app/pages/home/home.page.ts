@@ -19,9 +19,8 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.loadTasks()
-    // this.ts.getallTasks();
-    // this.tasks= this.ts.tasks;
   }
+  
   loadTasks(){
     this.ts.getallTasks().subscribe(
       t => this.tasks.set(t)

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonButton, IonModal, IonLabel, IonSelectOption, IonInput, IonMenuButton, IonButtons, IonCheckbox,IonSelect } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonButton, IonModal, IonLabel, IonSelectOption, IonInput, IonMenuButton, IonButtons, IonCheckbox, IonSelect, IonActionSheet } from '@ionic/angular/standalone';
 import { TaskService } from 'src/app/services/task-service';
 import { TaskModel } from '../../model/task-model';
 import { AlertController } from '@ionic/angular';
@@ -11,7 +11,7 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './detail.page.html',
   styleUrls: ['./detail.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonInput, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonButton, IonModal, ReactiveFormsModule, IonLabel,IonCheckbox,IonSelect, IonSelectOption, IonMenuButton, IonButtons]
+  imports: [IonContent,IonActionSheet, IonHeader, IonTitle, IonInput, IonToolbar, CommonModule, FormsModule, IonList, IonItem, IonButton, IonModal, ReactiveFormsModule, IonLabel, IonCheckbox, IonSelect, IonSelectOption, IonMenuButton, IonButtons, IonActionSheet]
 })
 export class DetailPage implements OnInit {
   private ts = inject(TaskService);
@@ -20,14 +20,44 @@ export class DetailPage implements OnInit {
   public form!:FormGroup;
   public isModalOpen=false;
   private selectedTask!:TaskModel;
-  public tasks= signal< TaskModel[]>([]);
+  private tasks= signal< TaskModel[]>([]);
+  public filteredTasks= signal< TaskModel[]>([]);
+
+  public filtro=[
+    {
+      text: "todas",
+      handler: ()=>{this.filterTask('todas')}
+    },
+    {
+      text: "Prioridad Alta",
+      handler: ()=>{this.filterTask('alta')}
+    },
+    {
+      text: "Prioridad Media",
+      handler: ()=>{this.filterTask('media')}
+    },
+    {
+      text: "Prioridad Baja",
+      handler: ()=>{this.filterTask('baja')}
+    },
+  ]
+  filterTask(p : string){
+    if(p === "todas"){
+      return this.filteredTasks.set(this.tasks())
+    }
+    return this.filteredTasks.set(this.tasks().filter(t => t.prioridad === p))
+  }
   ngOnInit() {
     this.loadTasks();
     this.preLoadForm();
   }
 
   loadTasks(){
-    this.ts.getallTasks().subscribe(t => this.tasks.set(t));
+    this.ts.getallTasks().subscribe(t => {
+      const orden = [...t].sort((a,b) => b.fechaVencimineto.localeCompare(a.fechaVencimineto));
+      this.tasks.set(orden);
+      this.filteredTasks.set(orden);
+    });
   }
 
   setModalState(state: boolean, t: TaskModel | undefined){
@@ -75,6 +105,4 @@ export class DetailPage implements OnInit {
     });
     await alert.present()
   }
-
-
 }
